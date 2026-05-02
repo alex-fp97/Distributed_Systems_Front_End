@@ -1,6 +1,7 @@
 package com.example.distributesystmesfrontend;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -44,7 +45,9 @@ public class MainMenu extends AppCompatActivity {
         });
 
         findViewById(R.id.rouletteButton).setOnClickListener(v -> {
-            // TODO: open roulette activity
+            Intent i = new Intent(this, Roulette.class);
+            i.putExtra("username", username);
+            startActivity(i);
         });
 
         findViewById(R.id.blackjackButton).setOnClickListener(v -> {
