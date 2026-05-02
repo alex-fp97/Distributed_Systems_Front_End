@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="navigationView" type="id" />
+    <item name="tomeButton" type="id" />
+    <item name="blackjackButton" type="id" />
+    <item name="rouletteButton" type="id" />
+    <item name="slotsButton" type="id" />
+    <item name="gamesGrid" type="id" />
+    <item name="menuButton" type="id" />
+</resources>
