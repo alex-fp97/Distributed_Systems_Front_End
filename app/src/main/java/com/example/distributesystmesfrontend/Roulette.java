@@ -34,7 +34,6 @@ public class Roulette extends AppCompatActivity {
         buildNumberGrid();
 
         String username = getIntent().getStringExtra("username");
-        double balance = getIntent().getDoubleExtra("balance", 0.0);
 
         findViewById(R.id.increaseBetButton).setOnClickListener(v->increaseBet());
         findViewById(R.id.decreaseBetButton).setOnClickListener(v->decreaseBet());
