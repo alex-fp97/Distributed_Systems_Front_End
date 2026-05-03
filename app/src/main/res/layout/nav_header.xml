@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:alpha="0.8"
+    android:background="?attr/colorPrimary"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="?attr/colorPrimary">
+    android:padding="24dp">
 
     <TextView
         android:id="@+id/navUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
         android:text="Username"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/navBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
         android:text="Balance: $0.00"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:paddingBottom="4dp"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/navProfitLoss"
@@ -32,6 +32,6 @@
         android:layout_height="wrap_content"
         android:text="Profit/Loss: $0.00"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
 </LinearLayout>

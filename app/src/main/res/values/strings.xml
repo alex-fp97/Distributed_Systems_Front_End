@@ -5,4 +5,7 @@
     <string name="button">Button</string>
     <string name="bet">Bet</string>
     <string name="_1">1</string>
+    <string name="slots">Slots</string>
+    <string name="roulette">Roulette</string>
+    <string name="_0">0</string>
 </resources>

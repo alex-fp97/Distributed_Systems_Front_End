@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,9 +31,14 @@ public class LoginScreen extends AppCompatActivity {
         button = findViewById(R.id.loginButton);
 
         button.setOnClickListener(v->{
-            Intent i = new Intent(this, MainMenu.class);
-            i.putExtra("username", usernameText.getText().toString());
-            startActivity(i);
+            if (!usernameText.getText().toString().isEmpty()) {
+                Intent i = new Intent(this, MainMenu.class);
+                i.putExtra("username", usernameText.getText().toString());
+                startActivity(i);
+            }
+            else{
+                Toast.makeText(this, "Type a username", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

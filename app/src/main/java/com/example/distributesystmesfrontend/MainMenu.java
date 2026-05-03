@@ -47,6 +47,7 @@ public class MainMenu extends AppCompatActivity {
         findViewById(R.id.rouletteButton).setOnClickListener(v -> {
             Intent i = new Intent(this, Roulette.class);
             i.putExtra("username", username);
+            i.putExtra("balance", Double.parseDouble(navBalance.getText().toString()));
             startActivity(i);
         });
 

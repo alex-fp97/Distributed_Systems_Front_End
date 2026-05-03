@@ -1,52 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginScreen">
+    android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tsoxa"
+        tools:context=".Roulette">
 
+        <ImageView
+            android:id="@+id/rouletteWheel"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/roulette_wheel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/betButton"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:text="@string/bet"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
+        <LinearLayout
+            android:id="@+id/outsideBets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tableScroll">
 
-    <androidx.gridlayout.widget.GridLayout
-        android:layout_width="381dp"
-        android:layout_height="114dp"
-        android:layout_marginBottom="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/betButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <GridLayout
-            android:id="@+id/bettingOptions"
-            android:columnCount="7"
-            android:rowCount="5"
-            android:layout_width="0dp"
-            android:layout_height="0dp">
 
             <Button
-                android:id="@+id/button1"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="204dp"
-                android:text="@string/_1" />
+                android:id="@+id/btnBlack"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:backgroundTint="#212121"
+                android:text="BLACK"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp" />
 
-        </GridLayout>
+            <Button
+                android:id="@+id/btnOdd"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="ODD"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btn19to36"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="19-36"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/outsideBets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tableScroll">
+
+            <Button
+                android:id="@+id/btn1to18"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="1-18"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnEven"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="EVEN"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnRed"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:backgroundTint="#c62828"
+                android:text="RED"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp" />
 
 
+        </LinearLayout>
 
-    </androidx.gridlayout.widget.GridLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/betControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/betButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/outsideBets">
+
+            <Button
+                android:id="@+id/decreaseBetButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:text="−"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/betAmountText"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="#33000000"
+                android:gravity="center"
+                android:text="0.1"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/increaseBetButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:text="+"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/tableScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rouletteWheel">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <!-- Zero (spans 3 rows) -->
+                <Button
+                    android:id="@+id/btn0"
+                    android:layout_width="40dp"
+                    android:layout_height="120dp"
+                    android:layout_marginEnd="2dp"
+                    android:backgroundTint="#0a7d3a"
+                    android:text="@string/_0"
+                    android:textColor="#FFFFFF"
+                    android:paddingHorizontal="1dp"
+                    android:paddingVertical="1dp"/>
+
+                <!-- Numbers 1-36 in a 3-row grid -->
+                <GridLayout
+                    android:id="@+id/numberGrid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnCount="12"
+                    android:rowCount="3" />
+                <!-- Buttons 1-36 added programmatically -->
+
+                <!-- Column 2:1 bets -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="2dp"
+                    android:orientation="vertical">
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Outside bets row -->
+
+        <Button
+            android:id="@+id/betButton"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="64dp"
+            android:text="@string/bet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
