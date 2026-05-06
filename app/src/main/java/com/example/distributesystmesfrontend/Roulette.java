@@ -1,8 +1,10 @@
 package com.example.distributesystmesfrontend;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -10,12 +12,28 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
+import java.util.random.RandomGenerator;
 
 public class Roulette extends AppCompatActivity {
+
+    private double sessionStartBalance;
+    private PlayerPackage.Player pl;
+    private boolean exiting = false;
 
     private static final Set<Integer> RED_NUMBERS = new HashSet<>(Arrays.asList(
             1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36
@@ -33,16 +51,74 @@ public class Roulette extends AppCompatActivity {
 
         buildNumberGrid();
 
-        String username = getIntent().getStringExtra("username");
+        pl = (PlayerPackage.Player) getIntent().getSerializableExtra("player");
+        sessionStartBalance = pl.getBalance();
 
         findViewById(R.id.increaseBetButton).setOnClickListener(v->increaseBet());
         findViewById(R.id.decreaseBetButton).setOnClickListener(v->decreaseBet());
 
         Button bet = findViewById(R.id.betButton);
-        bet.setOnClickListener(v->{
-            spinWheel(23);
+        TextView betTextView = findViewById(R.id.betAmountText);
+
+        bet.setOnClickListener(v-> {
+            new Thread(()->{
+                try{
+                Socket socket = new Socket("192.168.1.74", 5000);
+                String betText = betTextView.getText().toString();
+                MiscPackage.Request rq = new MiscPackage.Request("place_bet", new Object[]{pl, Double.parseDouble(betText), "Roulette"});
+
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                out.flush();
+                out.writeObject(rq);
+
+                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+                double result = in.readDouble();
+
+                Log.v("ms", "Received: " + result);
+
+                if (result == -1){
+                    runOnUiThread(() -> {
+                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    });
+                }else{
+
+                    runOnUiThread(() -> {
+                        pl.addBalance(-Double.parseDouble(betText));
+                        pl.addBalance(result);
+                        Toast.makeText(Roulette.this, "Won: " + result, Toast.LENGTH_SHORT).show();
+                    });
+                }
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }}).start();
+            spinWheel();
         });
 
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (exiting) return;
+                exiting = true;
+
+                Toast.makeText(Roulette.this, "Saving stats...", Toast.LENGTH_SHORT).show();
+
+                new Thread(() -> {
+                    double lifetimeProfitLoss = fetchLifetimeProfitLoss();
+
+                    runOnUiThread(() -> {
+                        Intent data = new Intent();
+                        data.putExtra("sessionProfitLoss", pl.getBalance() - sessionStartBalance);
+                        data.putExtra("lifetimeProfitLoss", lifetimeProfitLoss);
+                        data.putExtra("newBalance", pl.getBalance());
+                        data.putExtra("player", pl);
+                        setResult(RESULT_OK, data);
+                        finish();
+                    });
+                }).start();
+            }
+        });
     }
 
 
@@ -90,12 +166,15 @@ public class Roulette extends AppCompatActivity {
         Toast.makeText(this, "Clicked " + number, Toast.LENGTH_SHORT).show();
     }
 
-    private void spinWheel(int landingNumber) {
+    private void spinWheel() {
         ImageView wheel = findViewById(R.id.rouletteWheel);
+
+        Random rand = new Random();
+        int randomPos = Math.abs(rand.nextInt()) % WHEEL_ORDER.length;
 
         int pocketIndex = -1;
         for (int i = 0; i < WHEEL_ORDER.length; i++) {
-            if (WHEEL_ORDER[i] == landingNumber) {
+            if (WHEEL_ORDER[i] == randomPos) {
                 pocketIndex = i;
                 break;
             }
@@ -113,7 +192,7 @@ public class Roulette extends AppCompatActivity {
     }
 
     private void increaseBet(){
-        TextView currBetText= findViewById(R.id.betAmountText);
+        TextView currBetText = findViewById(R.id.betAmountText);
         if (currBetText.getText().toString().equals("0.1")){
             currBetText.setText("0.2");
         }
@@ -145,6 +224,26 @@ public class Roulette extends AppCompatActivity {
             double newBet = Double.parseDouble(currBetText.getText().toString()) - 0.5;
             String buttonNewText = newBet+"";
             currBetText.setText(buttonNewText);
+        }
+    }
+
+    private double fetchLifetimeProfitLoss() {
+        try (Socket socket = new Socket("192.168.1.74", 5000)) {
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.flush();
+            out.writeObject(new MiscPackage.Request(
+                    "get_player_profitLoss",
+                    new Object[]{ pl.getPlayerName() }
+            ));
+            out.flush();
+
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            double total = in.readDouble();
+            Log.v("ms", "Lifetime P/L received: " + total);
+            return total;
+        } catch (IOException e) {
+            Log.e("ms", "Failed to fetch lifetime P/L", e);
+            return 0;  // fall back to 0 if the network fails — don't block exit
         }
     }
 }

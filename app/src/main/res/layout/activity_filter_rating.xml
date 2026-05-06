@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/txt_filter_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter by Rating"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#070707"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Rating Description -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select minimum rating (stars):"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Rating Bar for filtering -->
+    <RatingBar
+        android:id="@+id/filter_rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="1"
+        android:layout_marginBottom="8dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:layout_gravity="center_horizontal" />
+
+    <!-- Selected Rating Display -->
+    <TextView
+        android:id="@+id/txt_selected_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selected Rating: All Games"
+        android:textSize="16sp"
+        android:textColor="#FFD15A"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Filter Results Info -->
+    <TextView
+        android:id="@+id/txt_results_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Games found: 0"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_reset_filter"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Reset"
+            android:backgroundTint="#070707"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="0dp" />
+
+        <Button
+            android:id="@+id/btn_apply_filter"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Apply Filter"
+            android:backgroundTint="#FFD15A"
+            android:textColor="#070707"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

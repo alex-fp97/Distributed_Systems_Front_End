@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/txt_filter_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter by Risk"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#070707"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Risk Level Description -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select risk levels to display:"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Low Risk -->
+    <CheckBox
+        android:id="@+id/checkbox_low_risk"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Low Risk - Steady and Predictable"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"
+        android:checked="false" />
+
+    <!-- Medium Risk -->
+    <CheckBox
+        android:id="@+id/checkbox_medium_risk"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Medium Risk - Balanced Gameplay"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"
+        android:checked="false" />
+
+    <!-- High Risk -->
+    <CheckBox
+        android:id="@+id/checkbox_high_risk"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="High Risk - Exciting and Volatile"
+        android:textSize="14sp"
+        android:layout_marginBottom="24dp"
+        android:checked="false" />
+
+    <!-- Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Filter Results Info -->
+    <TextView
+        android:id="@+id/txt_results_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Games found: 0"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_reset_filter"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Reset"
+            android:backgroundTint="#070707"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="0dp" />
+
+        <Button
+            android:id="@+id/btn_apply_filter"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Apply Filter"
+            android:backgroundTint="#FFD15A"
+            android:textColor="#070707"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
