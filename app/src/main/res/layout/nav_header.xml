@@ -38,25 +38,31 @@
         android:id="@+id/betFilterBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="filter by bet limits" />
+        android:text="Filter by Bet Limits" />
 
     <Button
         android:id="@+id/riskFilterBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="filter by risk" />
+        android:text="Filter by Risk" />
 
     <Button
         android:id="@+id/ratingFilterBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="filter by rating" />
+        android:text="Filter by Rating" />
 
     <Button
         android:id="@+id/addFundsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="add funds" />
+        android:text="Add funds" />
+
+    <Button
+        android:id="@+id/rateGameBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rate a Game" />
 
     <Button
         android:id="@+id/resetFiltersBtn"

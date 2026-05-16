@@ -20,6 +20,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     private List<String> gameNames = new ArrayList<>();
     private final OnGameClickListener listener;
 
+    public List<String> getCurrentGames(){
+        return gameNames;
+    }
     public GameAdapter(OnGameClickListener listener) {
         this.listener = listener;
     }

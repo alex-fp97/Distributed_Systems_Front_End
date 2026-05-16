@@ -24,7 +24,7 @@ import MiscPackage.Request;
 
 public class RateGameActivity extends AppCompatActivity {
 
-    public static final String EXTRA_AVAILABLE_GAMES = "availableGames";
+    public static final String EXTRA_AVAILABLE_GAMES = "gameNames";
 
     private Spinner spinnerGames;
     private RatingBar ratingBar;

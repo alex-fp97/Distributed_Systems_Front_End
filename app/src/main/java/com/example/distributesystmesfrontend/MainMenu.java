@@ -35,8 +35,7 @@ public class MainMenu extends AppCompatActivity {
     DrawerLayout drawerLayout;
     private PlayerPackage.Player pl;
     TextView navUsername, navBalance, navProfitLoss;
-    Button betFilter, riskFilter, ratingFilter, addFunds, resetFilters;
-
+    Button betFilter, riskFilter, ratingFilter, addFunds, resetFilters, rateGame;
     private RecyclerView gamesList;
     private GameAdapter gameAdapter;
 
@@ -81,6 +80,13 @@ public class MainMenu extends AppCompatActivity {
                         }
                     });
 
+    private final ActivityResultLauncher<Intent> rateGameLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        // Nothing to do — rating was saved on the server side
+                    });
+
     @SuppressWarnings("unchecked")
     private void handleFilterResult(androidx.activity.result.ActivityResult result) {
         if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -99,14 +105,15 @@ public class MainMenu extends AppCompatActivity {
 
         NavigationView navigationView = findViewById(R.id.navigationView);
         View headerView = navigationView.getHeaderView(0);
-        navUsername   = headerView.findViewById(R.id.navUsername);
-        navBalance    = headerView.findViewById(R.id.navBalance);
+        navUsername = headerView.findViewById(R.id.navUsername);
+        navBalance = headerView.findViewById(R.id.navBalance);
         navProfitLoss = headerView.findViewById(R.id.navProfitLoss);
-        betFilter     = headerView.findViewById(R.id.betFilterBtn);
-        riskFilter    = headerView.findViewById(R.id.riskFilterBtn);
-        ratingFilter  = headerView.findViewById(R.id.ratingFilterBtn);
-        addFunds      = headerView.findViewById(R.id.addFundsBtn);
-        resetFilters  = headerView.findViewById(R.id.resetFiltersBtn);
+        betFilter = headerView.findViewById(R.id.betFilterBtn);
+        riskFilter = headerView.findViewById(R.id.riskFilterBtn);
+        ratingFilter = headerView.findViewById(R.id.ratingFilterBtn);
+        addFunds = headerView.findViewById(R.id.addFundsBtn);
+        rateGame = headerView.findViewById(R.id.rateGameBtn);
+        resetFilters = headerView.findViewById(R.id.resetFiltersBtn);
 
         pl = (PlayerPackage.Player) getIntent().getSerializableExtra("player");
         navUsername.setText(pl.getPlayerName());
@@ -141,6 +148,17 @@ public class MainMenu extends AppCompatActivity {
             Intent i = new Intent(this, AddFundsActivity.class);
             i.putExtra("player", pl);
             addFundsLauncher.launch(i);
+        });
+
+        rateGame.setOnClickListener(v -> {
+            if (gameAdapter.getItemCount() == 0) {
+                Toast.makeText(this, "No games available", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent i = new Intent(this, RateGameActivity.class);
+            i.putExtra(RateGameActivity.EXTRA_AVAILABLE_GAMES,
+                    new ArrayList<>(gameAdapter.getCurrentGames()));
+            rateGameLauncher.launch(i);
         });
 
         resetFilters.setOnClickListener(v -> {

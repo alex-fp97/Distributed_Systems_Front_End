@@ -39,6 +39,9 @@
         <activity
             android:name=".FilterRiskActivity"
             android:exported="false"/>
+        <activity
+            android:name=".RateGameActivity"
+            android:exported="false"/>
 
 
         <meta-data
